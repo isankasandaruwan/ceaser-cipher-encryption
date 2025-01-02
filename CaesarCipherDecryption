@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class CaesarCipherDecryption {
+
+    public static String decrypt(String encryptedText, int shift) {
+        StringBuilder decryptedText = new StringBuilder();
+        
+        // Adjust shift to be within the range of 0-25
+        shift = shift % 26;
+
+        for (char c : encryptedText.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isUpperCase(c) ? 'A' : 'a';
+                char decryptedChar = (char) ((c - base - shift + 26) % 26 + base);
+                decryptedText.append(decryptedChar);
+            } else {
+                // Non-alphabetic characters remain unchanged
+                decryptedText.append(c);
+            }
+        }
+
+        return decryptedText.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the encrypted text:");
+        String encryptedText = scanner.nextLine();
+
+        System.out.println("Enter the shift value (key):");
+        int shift = scanner.nextInt();
+
+        String decryptedText = decrypt(encryptedText, shift);
+        System.out.println("Decrypted text: " + decryptedText);
+    }
+}
